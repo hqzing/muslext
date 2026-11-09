@@ -1,0 +1,11 @@
+prefix=@PREFIX@
+exec_prefix=${prefix}
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+
+Name: muslext
+Description: Compatibility extensions for musl libc
+Version: @VERSION@
+Cflags: -I${includedir}
+Libs: -L${libdir} -lmuslext
+Libs.private: -lm
