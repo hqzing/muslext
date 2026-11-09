@@ -55,6 +55,23 @@ clang -include muslext/muslext.h -I"$HOME/.local/include" app.c \
    -L"$HOME/.local/lib" -lmuslext -o app
 ```
 
+`<muslext/muslext.h>` 是完整的总头文件。需要运行编译器探测或 configure 探测的构建系统，应只包含所需接口的最小头文件，避免无关声明影响探测结果：
+
+- `<muslext/getpass.h>`
+- `<muslext/utmpx.h>`
+- `<muslext/qsort_r.h>`
+- `<muslext/shadow.h>`
+- `<muslext/statx.h>`
+- `<muslext/gnu.h>`，用于 GNU 常量
+- `<muslext/program.h>`，用于 `program_invocation_*`
+
+例如：
+
+```sh
+clang -include muslext/getpass.h -I"$HOME/.local/include" app.c \
+   -L"$HOME/.local/lib" -lmuslext -o app
+```
+
 ## 构建系统集成
 
 推荐优先使用 pkg-config：

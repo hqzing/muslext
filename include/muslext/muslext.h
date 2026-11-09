@@ -84,30 +84,14 @@ extern "C" {
 /* A class: symbols present in the runtime libc but absent from the    */
 /* build environment.  muslext exports them and delegates at runtime.  */
 
-struct utmpx *getutxent (void);
-void setutxent (void);
-void endutxent (void);
-struct utmpx *getutxid (const struct utmpx *id);
-struct utmpx *getutxline (const struct utmpx *line);
-struct utmpx *pututxline (const struct utmpx *utmpx);
-int utmpxname (const char *file);
-void updwtmpx (const char *file, const struct utmpx *entry);
-
-#ifndef WTMPX_FILE
-# define WTMPX_FILE "/var/log/wtmp"
-#endif
-
-void qsort_r (void *base, size_t nmemb, size_t size,
-              int (*compar) (const void *, const void *, void *), void *arg);
-
-struct spwd *getspnam (const char *name);
-struct spwd *getspent (void);
-void setspent (void);
-void endspent (void);
+#include <muslext/utmpx.h>
+#include <muslext/qsort_r.h>
+#include <muslext/shadow.h>
+#include <muslext/getpass.h>
+#include <muslext/program.h>
 
 void *reallocarray (void *ptr, size_t nmemb, size_t size);
 char *get_current_dir_name (void);
-char *getpass (const char *prompt);
 int __sigsetjmp (sigjmp_buf env, int savemask);
 
 #ifdef CPU_SETSIZE
@@ -119,18 +103,13 @@ int pthread_getaffinity_np (pthread_t thread, size_t cpusetsize,
 
 int __xpg_strerror_r (int errnum, char *buf, size_t buflen);
 
-extern char *program_invocation_name;
-extern char *program_invocation_short_name;
-
 /* B class: interfaces absent from both the stub and the runtime libc. */
 
 char *canonicalize_file_name (const char *name);
 char *crypt_r (const char *key, const char *salt, struct crypt_data *data);
 char *crypt (const char *key, const char *salt);
 
-struct statx;
-int statx (int dirfd, const char *pathname, int flags, unsigned int mask,
-           struct statx *statxbuf);
+#include <muslext/statx.h>
 
 /* gnu_misc */
 long long strtoq (const char *nptr, char **endptr, int base);
