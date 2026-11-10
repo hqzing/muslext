@@ -15,7 +15,6 @@ that support.  See the installed headers for exact prototypes.
 | Object stacks | `obstack_*` |
 | Diagnostics | `error`, `error_at_line`, GNU `error.h` globals |
 | Login records | `getutxent`, `setutxent`, `endutxent`, `getutxid`, `getutxline`, `pututxline`, `utmpxname`, `updwtmpx` |
-| Argp | `argp_parse`, `argp_help`, `argp_state_help`, `argp_error`, `argp_failure` |
 | Argz | `argz_create`, `argz_create_sep`, `argz_add`, `argz_add_sep`, `argz_append`, `argz_count`, `argz_insert`, `argz_stringify` |
 | fstab | `setfsent`, `endfsent`, `getfsent`, `getfsfile`, `getfsspec` |
 | Sorting | `qsort_r` |
@@ -53,7 +52,7 @@ Use `<muslext/muslext.h>` for the complete interface surface.
 
 ## Interface notes
 
-`fts` and `argp` use the standard glibc/musl-fts ABI, so ordinary programs
+`fts` uses the standard glibc/musl-fts ABI, so ordinary programs
 and tests compile without source changes.
 
 `pthread_cancel` / `pthread_testcancel` are not provided; they cannot be

@@ -22,7 +22,6 @@ Covered:
 * `test_delegate` — utmpx, shadow, strerror_r and program-name wrappers
 * `test_tree` — red-black tree invariants under random insert/remove
 * `test_gnu` — string/math/printf/argz/base64/glob/device helpers
-* `test_argp` — argp option parsing
 * `test_path` — getwd, scandirat, fstab
 * `test_glob` — GLOB_BRACE expansion
 * `test_getpass` — non-interactive password read

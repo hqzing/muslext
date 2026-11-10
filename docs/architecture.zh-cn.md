@@ -9,7 +9,7 @@
 | 类别 | 含义 | 示例 |
 | --- | --- | --- |
 | A 类 | 运行时 libc 已导出该符号，但构建环境的头文件或链接信息没有暴露。muslext 提供包装，运行时通过 `dlsym(RTLD_NEXT)` 转交给 libc。 | `statx`、`__xpg_strerror_r`、`pthread_setaffinity_np` |
-| B 类 | 运行时 libc 和构建环境都没有，需要自带实现。 | `fts(3)`、GNU `obstack`、`error.h`、`utmpx`、`argp` |
+| B 类 | 运行时 libc 和构建环境都没有，需要自带实现。 | `fts(3)`、GNU `obstack`、`error.h`、`utmpx` |
 
 ## A 类：运行时委托
 
@@ -28,5 +28,5 @@ B 类接口由 `src/` 中的独立实现提供，不依赖 glibc 的源码或行
 - GNU `obstack`；
 - GNU `error.h`；
 - `utmpx` 文件数据库；
-- `argp`、`argz`、`fstab`、`glob`、`getpass`；
+- `argz`、`fstab`、`glob`、`getpass`；
 - `qsort_r`、`crypt_r`、`strverscmp` 等常见缺失接口。

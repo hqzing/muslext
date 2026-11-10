@@ -14,7 +14,6 @@
 | 对象栈 | `obstack_*` |
 | 诊断 | `error`、`error_at_line`、GNU `error.h` 全局变量 |
 | 登录记录 | `getutxent`、`setutxent`、`endutxent`、`getutxid`、`getutxline`、`pututxline`、`utmpxname`、`updwtmpx` |
-| Argp | `argp_parse`、`argp_help`、`argp_state_help`、`argp_error`、`argp_failure` |
 | Argz | `argz_create`、`argz_create_sep`、`argz_add`、`argz_add_sep`、`argz_append`、`argz_count`、`argz_insert`、`argz_stringify` |
 | fstab | `setfsent`、`endfsent`、`getfsent`、`getfsfile`、`getfsspec` |
 | 排序 | `qsort_r` |
@@ -52,7 +51,7 @@
 
 ## 接口说明
 
-`fts` 和 `argp` 使用标准的 glibc/musl-fts ABI，普通程序和测试无需修改源码即可编译。
+`fts` 使用标准的 glibc/musl-fts ABI，普通程序和测试无需修改源码即可编译。
 
 `pthread_cancel`/`pthread_testcancel` 不提供；它们无法在 libc 外正确实现。
 

@@ -9,7 +9,7 @@
 | Class | Meaning | Examples |
 | --- | --- | --- |
 | A | The runtime libc exports the symbol, but the build environment's headers or link information do not expose it. muslext forwards to the real function with `dlsym(RTLD_NEXT)`. | `statx`, `__xpg_strerror_r`, `pthread_setaffinity_np` |
-| B | Neither the runtime libc nor the build environment provides it; muslext carries an implementation. | `fts(3)`, GNU `obstack`, `error.h`, `utmpx`, `argp` |
+| B | Neither the runtime libc nor the build environment provides it; muslext carries an implementation. | `fts(3)`, GNU `obstack`, `error.h`, `utmpx` |
 
 ## Class A: runtime delegation
 
@@ -31,6 +31,6 @@ and cover:
 - GNU `obstack`;
 - GNU `error.h`;
 - the `utmpx` file database;
-- `argp`, `argz`, `fstab`, `glob`, `getpass`;
+- `argz`, `fstab`, `glob`, `getpass`;
 - commonly missing interfaces such as `qsort_r`, `crypt_r` and
   `strverscmp`.
