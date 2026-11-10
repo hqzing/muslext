@@ -29,6 +29,7 @@
 #include <shadow.h>
 #include <crypt.h>
 #include <dirent.h>
+#include <muslext/dirent.h>
 #include <sys/uio.h>
 
 #ifdef __cplusplus
