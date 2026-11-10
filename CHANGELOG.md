@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.0
+
+### Added
+
+- `versionsort(3)`.
+
+### Fixed
+
+- Clear `errno` when `fts_read(3)` reaches EOF.
+
 ## 1.1.0
 
 ### Added
