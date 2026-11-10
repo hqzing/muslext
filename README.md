@@ -62,27 +62,9 @@ clang -include muslext/muslext.h -I"$HOME/.local/include" app.c \
    -L"$HOME/.local/lib" -lmuslext -o app
 ```
 
-`<muslext/muslext.h>` is the complete umbrella header.  Build systems that
-run compiler or configure probes should include only the header for the
-interface they need, so unrelated declarations do not affect feature
-detection:
-
-- `<muslext/getpass.h>`
-- `<muslext/utmpx.h>`
-- `<muslext/qsort_r.h>`
-- `<muslext/shadow.h>`
-- `<muslext/statx.h>`
-- `<muslext/gnu.h>` for GNU constants
-- `<muslext/program.h>` for `program_invocation_*`
-
-For example:
-
-```sh
-clang -include muslext/getpass.h -I"$HOME/.local/include" app.c \
-   -L"$HOME/.local/lib" -lmuslext -o app
-```
-
 ## Build-system integration
+
+When a build system runs compiler or configure probes, include the minimal header for the interface it needs, such as `muslext/getpass.h` or `muslext/qsort_r.h`, so unrelated declarations do not affect feature detection. See [Compatibility and limitations](docs/compatibility.md) for the full list.
 
 pkg-config is the preferred route:
 

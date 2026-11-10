@@ -27,11 +27,28 @@
 | 设备号 | `gnu_dev_major`、`gnu_dev_minor`、`gnu_dev_makedev` |
 | libc 标识 | `gnu_get_libc_version`、`gnu_get_libc_release` |
 | 路径 | `canonicalize_file_name`、`get_current_dir_name`、`getpt`、`getwd`、`closefrom`、`scandirat`、`glob_pattern_p`、`glob` |
+| 目录排序 | `versionsort` |
 | 密码输入 | `getpass` |
 | POSIX 线程 | `pthread_yield`、`pthread_tryjoin_np`、`pthread_timedjoin_np`、affinity |
 | 凭据 | `crypt_r`、shadow 数据库委托 |
 | Linux 系统调用 | mount API、`pidfd_open`、`pidfd_getfd`、`getcpu`、`ntp_adjtime`、`preadv64v2`、`pwritev64v2` |
 | libc 内部 | `__libc_realloc`、`__libc_memalign`、`__asinf_finite`、`__isinff`、`__isnanf`、`__fpu_control`、`malloc_trim` |
+
+## 最小头文件
+
+构建系统执行编译器或 configure 探测时，建议只包含目标接口的最小头文件：
+
+| 头文件 | 用途 |
+| --- | --- |
+| `<muslext/getpass.h>` | `getpass` |
+| `<muslext/utmpx.h>` | utmpx 登录记录接口 |
+| `<muslext/qsort_r.h>` | `qsort_r` |
+| `<muslext/shadow.h>` | shadow 口令查询 |
+| `<muslext/statx.h>` | `statx` |
+| `<muslext/gnu.h>` | GNU 常量 |
+| `<muslext/program.h>` | `program_invocation_*` |
+
+完整接口面使用 `<muslext/muslext.h>`。
 
 ## 接口说明
 

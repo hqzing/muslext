@@ -28,11 +28,28 @@ that support.  See the installed headers for exact prototypes.
 | Devices | `gnu_dev_major`, `gnu_dev_minor`, `gnu_dev_makedev` |
 | Libc identity | `gnu_get_libc_version`, `gnu_get_libc_release` |
 | Paths | `canonicalize_file_name`, `get_current_dir_name`, `getpt`, `getwd`, `closefrom`, `scandirat`, `glob_pattern_p`, `glob` |
+| Directory sorting | `versionsort` |
 | Password input | `getpass` |
 | POSIX threads | `pthread_yield`, `pthread_tryjoin_np`, `pthread_timedjoin_np`, affinity |
 | Credentials | `crypt_r`, shadow database delegation |
 | Linux syscalls | mount API, `pidfd_open`, `pidfd_getfd`, `getcpu`, `ntp_adjtime`, `preadv64v2`, `pwritev64v2` |
 | libc internals | `__libc_realloc`, `__libc_memalign`, `__asinf_finite`, `__isinff`, `__isnanf`, `__fpu_control`, `malloc_trim` |
+
+## Minimal headers
+
+When a build system runs compiler or configure probes, include only the minimal header for the target interface:
+
+| Header | Purpose |
+| --- | --- |
+| `<muslext/getpass.h>` | `getpass` |
+| `<muslext/utmpx.h>` | utmpx login records |
+| `<muslext/qsort_r.h>` | `qsort_r` |
+| `<muslext/shadow.h>` | shadow password queries |
+| `<muslext/statx.h>` | `statx` |
+| `<muslext/gnu.h>` | GNU constants |
+| `<muslext/program.h>` | `program_invocation_*` |
+
+Use `<muslext/muslext.h>` for the complete interface surface.
 
 ## Interface notes
 
