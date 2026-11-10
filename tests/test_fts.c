@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,6 +51,9 @@ main (void)
   assert (saw_dir == 2);
   assert (saw_file == 1);
   assert (saw_dp == 2);
+  errno = EIO;
+  assert (fts_read (fts) == NULL);
+  assert (errno == 0);
   assert (fts_close (fts) == 0);
 
   {

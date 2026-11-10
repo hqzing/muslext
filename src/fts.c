@@ -427,6 +427,7 @@ fts_read (FTS *sp)
         }
 
       sp->fts_cur = NULL;
+      errno = 0;
       return NULL;
     }
 }
