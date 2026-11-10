@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0
+
+### Removed
+
+- Remove the incomplete `argp` implementation. Programs that need `argp`
+  should use a standalone argp implementation.
+
 ## 1.2.0
 
 ### Added
