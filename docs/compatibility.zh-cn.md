@@ -46,8 +46,40 @@
 | `<muslext/statx.h>` | `statx` |
 | `<muslext/gnu.h>` | GNU 常量 |
 | `<muslext/program.h>` | `program_invocation_*` |
+| `<muslext/crypt.h>` | `crypt`、`crypt_r` |
+| `<muslext/dirent.h>` | `versionsort`、`scandirat` |
+| `<muslext/fpu_control.h>` | `__fpu_control` |
+| `<muslext/glob.h>` | `glob_pattern_p` |
+| `<muslext/gnu-libc-version.h>` | `gnu_get_libc_version`、`gnu_get_libc_release` |
+| `<muslext/malloc.h>` | `malloc_trim`、`__libc_realloc`、`__libc_memalign` |
+| `<muslext/math.h>` | `gamma`、`roundeven`、`clog10`、finite/NaN 辅助函数 |
+| `<muslext/pthread.h>` | `pthread_tryjoin_np`、`pthread_timedjoin_np`、`pthread_yield` |
+| `<muslext/pthread_affinity.h>` | pthread affinity；需要 `_GNU_SOURCE` |
+| `<muslext/resolv.h>` | `b64_ntop`、`b64_pton` |
+| `<muslext/sched.h>` | `getcpu` |
+| `<muslext/setjmp.h>` | `__sigsetjmp`；需要 POSIX/GNU feature-test 宏 |
+| `<muslext/signal.h>` | `sigblock`、`sigsetmask`、`sig*_np` |
+| `<muslext/stdlib.h>` | `reallocarray`、`canonicalize_file_name`、`strtoq`、`qecvt` |
+| `<muslext/string.h>` | `__xpg_strerror_r`、`rawmemchr`、`strverscmp`、`strerror*_np` |
+| `<muslext/sys/mount.h>` | Linux mount API（`fsopen`、`open_tree` 等） |
+| `<muslext/sys/sysmacros.h>` | `gnu_dev_major`、`gnu_dev_minor`、`gnu_dev_makedev` |
+| `<muslext/sys/timex.h>` | `ntp_adjtime` |
+| `<muslext/sys/uio.h>` | `preadv64v2`、`pwritev64v2` |
+| `<muslext/unistd.h>` | `get_current_dir_name`、`getwd`、`getpt`、`closefrom`、`close_range` |
+| `<muslext/wchar.h>` | `wcslcpy`、`wcslcat`、`wcstol_l`、`wcstoul_l` |
+| `<fts.h>`、`<error.h>`、`<obstack.h>`、`<argz.h>` | fts、GNU error、obstack、argz |
+| `<fstab.h>`、`<printf.h>`、`<sys/tree.h>`、`<sys/pidfd.h>` | fstab、printf hooks、tree 宏、pidfd |
 
 完整接口面使用 `<muslext/muslext.h>`。
+
+## Feature-test 宏
+
+最小头文件不会定义 feature-test 宏。属于 GNU 扩展的接口需要调用方在任何系统头文件之前定义 `_GNU_SOURCE`：
+
+- `<muslext/pthread_affinity.h>` 需要 `_GNU_SOURCE` 才能获得 `cpu_set_t`，否则明确报错；
+- `<muslext/setjmp.h>` 需要 `_GNU_SOURCE` 或 POSIX feature-test 宏才能获得 `sigjmp_buf`。
+
+`<muslext/muslext.h>` 只会在对应 feature-test 宏暴露类型时包含这些 GNU 依赖头文件。
 
 ## 接口说明
 

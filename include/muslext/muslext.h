@@ -1,16 +1,13 @@
 /* muslext - compatibility extensions for musl libc.
  *
- * This header is the single entry point for consumers.  It includes all
- * minimal headers and the version/ABI macros.  It never replaces a system
+ * This header is the single entry point for consumers.  It includes every
+ * minimal header whose interfaces are available for the current feature-test
+ * configuration, plus the version/ABI macros.  It never replaces a system
  * header.
  */
 
 #ifndef MUSLEXT_H
 #define MUSLEXT_H 1
-
-#ifndef _GNU_SOURCE
-# define _GNU_SOURCE 1
-#endif
 
 #include <muslext/crypt.h>
 #include <muslext/dirent.h>
@@ -26,7 +23,15 @@
 #include <muslext/qsort_r.h>
 #include <muslext/resolv.h>
 #include <muslext/sched.h>
+
+#if defined(CPU_SETSIZE)
+#include <muslext/pthread_affinity.h>
+#endif
+#if defined(_GNU_SOURCE) || defined(_POSIX_SOURCE) \
+    || defined(_POSIX_C_SOURCE) || defined(_XOPEN_SOURCE) \
+    || defined(_BSD_SOURCE)
 #include <muslext/setjmp.h>
+#endif
 #include <muslext/shadow.h>
 #include <muslext/signal.h>
 #include <muslext/statx.h>

@@ -3,10 +3,13 @@
 #ifndef MUSLEXT_SETJMP_H
 #define MUSLEXT_SETJMP_H 1
 
-#ifndef _GNU_SOURCE
-# define _GNU_SOURCE 1
-#endif
 #include <setjmp.h>
+
+#if !defined(_GNU_SOURCE) && !defined(_POSIX_SOURCE) \
+    && !defined(_POSIX_C_SOURCE) && !defined(_XOPEN_SOURCE) \
+    && !defined(_BSD_SOURCE)
+# error "muslext/setjmp.h requires POSIX or GNU feature-test macros"
+#endif
 
 #ifdef __cplusplus
 extern "C" {

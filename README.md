@@ -28,6 +28,11 @@ make install PREFIX="$HOME/.local"
 After installation, include the header for the interface you use.  For
 example, `fts(3)`:
 
+Minimal headers do not define `_GNU_SOURCE`.  Interfaces that are GNU
+extensions, such as `muslext/pthread_affinity.h` and `muslext/setjmp.h`,
+require the consumer to compile with `-D_GNU_SOURCE` (or the corresponding
+POSIX feature macro) before any system header.
+
 ```c
 #include <fts.h>
 

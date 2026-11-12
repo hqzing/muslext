@@ -4,17 +4,9 @@
 #define MUSLEXT_PTHREAD_H 1
 
 #include <pthread.h>
-#include <sched.h>
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-
-#ifdef CPU_SETSIZE
-int pthread_setaffinity_np (pthread_t thread, size_t cpusetsize,
-                            const cpu_set_t *cpuset);
-int pthread_getaffinity_np (pthread_t thread, size_t cpusetsize,
-                            cpu_set_t *cpuset);
 #endif
 
 int pthread_tryjoin_np (pthread_t thread, void **retval);

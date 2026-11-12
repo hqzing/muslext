@@ -12,6 +12,7 @@
 #include <muslext/malloc.h>
 #include <muslext/math.h>
 #include <muslext/pthread.h>
+#include <muslext/pthread_affinity.h>
 #include <muslext/resolv.h>
 #include <muslext/sched.h>
 #include <muslext/setjmp.h>

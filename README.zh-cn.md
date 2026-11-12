@@ -21,6 +21,8 @@ make install PREFIX="$HOME/.local"
 
 安装后，在代码中包含对应头文件即可。例如使用 `fts(3)`：
 
+最小头文件不会定义 `_GNU_SOURCE`。属于 GNU 扩展的接口，例如 `muslext/pthread_affinity.h` 和 `muslext/setjmp.h`，需要调用方在任何系统头文件之前使用 `-D_GNU_SOURCE`（或对应的 POSIX feature-test 宏）。
+
 ```c
 #include <fts.h>
 

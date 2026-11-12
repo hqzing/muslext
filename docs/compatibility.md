@@ -47,8 +47,45 @@ When a build system runs compiler or configure probes, include only the minimal 
 | `<muslext/statx.h>` | `statx` |
 | `<muslext/gnu.h>` | GNU constants |
 | `<muslext/program.h>` | `program_invocation_*` |
+| `<muslext/crypt.h>` | `crypt`, `crypt_r` |
+| `<muslext/dirent.h>` | `versionsort`, `scandirat` |
+| `<muslext/fpu_control.h>` | `__fpu_control` |
+| `<muslext/glob.h>` | `glob_pattern_p` |
+| `<muslext/gnu-libc-version.h>` | `gnu_get_libc_version`, `gnu_get_libc_release` |
+| `<muslext/malloc.h>` | `malloc_trim`, `__libc_realloc`, `__libc_memalign` |
+| `<muslext/math.h>` | `gamma`, `roundeven`, `clog10`, finite/NaN helpers |
+| `<muslext/pthread.h>` | `pthread_tryjoin_np`, `pthread_timedjoin_np`, `pthread_yield` |
+| `<muslext/pthread_affinity.h>` | pthread affinity; requires `_GNU_SOURCE` |
+| `<muslext/resolv.h>` | `b64_ntop`, `b64_pton` |
+| `<muslext/sched.h>` | `getcpu` |
+| `<muslext/setjmp.h>` | `__sigsetjmp`; requires POSIX/GNU feature macros |
+| `<muslext/signal.h>` | `sigblock`, `sigsetmask`, `sig*_np` |
+| `<muslext/stdlib.h>` | `reallocarray`, `canonicalize_file_name`, `strtoq`, `qecvt` |
+| `<muslext/string.h>` | `__xpg_strerror_r`, `rawmemchr`, `strverscmp`, `strerror*_np` |
+| `<muslext/sys/mount.h>` | Linux mount API (`fsopen`, `open_tree`, ...) |
+| `<muslext/sys/sysmacros.h>` | `gnu_dev_major`, `gnu_dev_minor`, `gnu_dev_makedev` |
+| `<muslext/sys/timex.h>` | `ntp_adjtime` |
+| `<muslext/sys/uio.h>` | `preadv64v2`, `pwritev64v2` |
+| `<muslext/unistd.h>` | `get_current_dir_name`, `getwd`, `getpt`, `closefrom`, `close_range` |
+| `<muslext/wchar.h>` | `wcslcpy`, `wcslcat`, `wcstol_l`, `wcstoul_l` |
+| `<fts.h>`, `<error.h>`, `<obstack.h>`, `<argz.h>` | fts, GNU error, obstack and argz |
+| `<fstab.h>`, `<printf.h>`, `<sys/tree.h>`, `<sys/pidfd.h>` | fstab, printf hooks, tree macros and pidfd |
 
 Use `<muslext/muslext.h>` for the complete interface surface.
+
+## Feature-test macros
+
+Minimal headers do not define feature-test macros.  Interfaces that are GNU
+extensions require the consumer to define `_GNU_SOURCE` before any system
+header:
+
+- `<muslext/pthread_affinity.h>` requires `_GNU_SOURCE` for `cpu_set_t` and
+  reports an explicit error otherwise;
+- `<muslext/setjmp.h>` requires `_GNU_SOURCE` or a POSIX feature macro for
+  `sigjmp_buf`.
+
+`<muslext/muslext.h>` includes these GNU-dependent headers only when the
+corresponding feature macros expose their types.
 
 ## Interface notes
 
