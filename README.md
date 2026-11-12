@@ -25,13 +25,9 @@ make install PREFIX="$HOME/.local"
 
 ## Usage
 
-After installation, include the header for the interface you use.  For
-example, `fts(3)`:
+After installation, include the header for the interface you use.
 
-Minimal headers do not define `_GNU_SOURCE`.  Interfaces that are GNU
-extensions, such as `muslext/pthread_affinity.h` and `muslext/setjmp.h`,
-require the consumer to compile with `-D_GNU_SOURCE` (or the corresponding
-POSIX feature macro) before any system header.
+For example, `fts(3)`:
 
 ```c
 #include <fts.h>
@@ -58,6 +54,17 @@ The simplest compile command:
 ```sh
 clang -I"$HOME/.local/include" app.c \
    -L"$HOME/.local/lib" -lmuslext -o app
+```
+
+To use GNU extension interfaces such as `muslext/pthread_affinity.h` and
+`muslext/setjmp.h`, consumers must define `_GNU_SOURCE` (or the corresponding
+POSIX feature-test macro) before including any system header.
+
+For example, `pthread_setaffinity_np` and `pthread_getaffinity_np`:
+
+```sh
+clang -D_GNU_SOURCE -include muslext/pthread_affinity.h \
+   -I"$HOME/.local/include" app.c -L"$HOME/.local/lib" -lmuslext -o app
 ```
 
 For code that needs the extra declarations/macros provided by muslext, add `-include muslext/muslext.h`:

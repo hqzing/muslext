@@ -28,7 +28,7 @@
 | 路径 | `canonicalize_file_name`、`get_current_dir_name`、`getpt`、`getwd`、`closefrom`、`scandirat`、`glob_pattern_p`、`glob` |
 | 目录排序 | `versionsort` |
 | 密码输入 | `getpass` |
-| POSIX 线程 | `pthread_yield`、`pthread_tryjoin_np`、`pthread_timedjoin_np`、affinity |
+| POSIX 线程 | `pthread_yield`、`pthread_tryjoin_np`、`pthread_timedjoin_np`、`pthread_setaffinity_np`、`pthread_getaffinity_np` |
 | 凭据 | `crypt_r`、shadow 数据库委托 |
 | Linux 系统调用 | mount API、`pidfd_open`、`pidfd_getfd`、`getcpu`、`ntp_adjtime`、`preadv64v2`、`pwritev64v2` |
 | libc 内部 | `__libc_realloc`、`__libc_memalign`、`__asinf_finite`、`__isinff`、`__isnanf`、`__fpu_control`、`malloc_trim` |
@@ -54,7 +54,7 @@
 | `<muslext/malloc.h>` | `malloc_trim`、`__libc_realloc`、`__libc_memalign` |
 | `<muslext/math.h>` | `gamma`、`roundeven`、`clog10`、finite/NaN 辅助函数 |
 | `<muslext/pthread.h>` | `pthread_tryjoin_np`、`pthread_timedjoin_np`、`pthread_yield` |
-| `<muslext/pthread_affinity.h>` | pthread affinity；需要 `_GNU_SOURCE` |
+| `<muslext/pthread_affinity.h>` | `pthread_setaffinity_np`、`pthread_getaffinity_np`；需要 `_GNU_SOURCE` |
 | `<muslext/resolv.h>` | `b64_ntop`、`b64_pton` |
 | `<muslext/sched.h>` | `getcpu` |
 | `<muslext/setjmp.h>` | `__sigsetjmp`；需要 POSIX/GNU feature-test 宏 |
@@ -74,9 +74,9 @@
 
 ## Feature-test 宏
 
-最小头文件不会定义 feature-test 宏。属于 GNU 扩展的接口需要调用方在任何系统头文件之前定义 `_GNU_SOURCE`：
+属于 GNU 扩展的接口需要调用方在任何系统头文件之前定义 `_GNU_SOURCE`：
 
-- `<muslext/pthread_affinity.h>` 需要 `_GNU_SOURCE` 才能获得 `cpu_set_t`，否则明确报错；
+- `<muslext/pthread_affinity.h>` 需要 `_GNU_SOURCE` 才能获得 `cpu_set_t`，否则明确报错；它声明 `pthread_setaffinity_np` 和 `pthread_getaffinity_np`；
 - `<muslext/setjmp.h>` 需要 `_GNU_SOURCE` 或 POSIX feature-test 宏才能获得 `sigjmp_buf`。
 
 `<muslext/muslext.h>` 只会在对应 feature-test 宏暴露类型时包含这些 GNU 依赖头文件。
@@ -98,4 +98,4 @@
 
 - mount API、`ntp_adjtime`、`pidfd_*`、`getcpu`、`preadv64v2`/`pwritev64v2` 依赖内核能力；内核不支持时返回 `ENOSYS`。
 - `__libc_*`、`__fpu_control`、`__asinf_finite`、`__isinff`、`__isnanf` 是 best-effort ABI 兼容，不保证 libc 内部语义。
-- A 类包装（shadow、affinity、`statx` 等）依赖运行时 libc 的真实实现；如果运行时本身是 `ENOSYS` 桩，包装也只能返回失败。
+- A 类包装（shadow、`pthread_setaffinity_np`/`pthread_getaffinity_np`、`statx` 等）依赖运行时 libc 的真实实现；如果运行时本身是 `ENOSYS` 桩，包装也只能返回失败。

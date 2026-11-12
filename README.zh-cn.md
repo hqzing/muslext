@@ -19,9 +19,9 @@ make install PREFIX="$HOME/.local"
 
 ## 使用
 
-安装后，在代码中包含对应头文件即可。例如使用 `fts(3)`：
+安装后，在代码中包含对应头文件即可。
 
-最小头文件不会定义 `_GNU_SOURCE`。属于 GNU 扩展的接口，例如 `muslext/pthread_affinity.h` 和 `muslext/setjmp.h`，需要调用方在任何系统头文件之前使用 `-D_GNU_SOURCE`（或对应的 POSIX feature-test 宏）。
+例如使用 `fts(3)`：
 
 ```c
 #include <fts.h>
@@ -48,6 +48,15 @@ int main(void)
 ```sh
 clang -I"$HOME/.local/include" app.c \
    -L"$HOME/.local/lib" -lmuslext -o app
+```
+
+如需使用 GNU 扩展接口，例如 `muslext/pthread_affinity.h` 和 `muslext/setjmp.h`，调用方必须在包含任何系统头文件之前自行定义 `_GNU_SOURCE`（或对应的 POSIX feature-test 宏）。
+
+例如 `pthread_setaffinity_np` 和 `pthread_getaffinity_np`：
+
+```sh
+clang -D_GNU_SOURCE -include muslext/pthread_affinity.h \
+   -I"$HOME/.local/include" app.c -L"$HOME/.local/lib" -lmuslext -o app
 ```
 
 对于需要 muslext 提供的额外声明/宏的代码，加上 `-include muslext/muslext.h`：

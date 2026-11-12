@@ -29,7 +29,7 @@ that support.  See the installed headers for exact prototypes.
 | Paths | `canonicalize_file_name`, `get_current_dir_name`, `getpt`, `getwd`, `closefrom`, `scandirat`, `glob_pattern_p`, `glob` |
 | Directory sorting | `versionsort` |
 | Password input | `getpass` |
-| POSIX threads | `pthread_yield`, `pthread_tryjoin_np`, `pthread_timedjoin_np`, affinity |
+| POSIX threads | `pthread_yield`, `pthread_tryjoin_np`, `pthread_timedjoin_np`, `pthread_setaffinity_np`, `pthread_getaffinity_np` |
 | Credentials | `crypt_r`, shadow database delegation |
 | Linux syscalls | mount API, `pidfd_open`, `pidfd_getfd`, `getcpu`, `ntp_adjtime`, `preadv64v2`, `pwritev64v2` |
 | libc internals | `__libc_realloc`, `__libc_memalign`, `__asinf_finite`, `__isinff`, `__isnanf`, `__fpu_control`, `malloc_trim` |
@@ -55,7 +55,7 @@ When a build system runs compiler or configure probes, include only the minimal 
 | `<muslext/malloc.h>` | `malloc_trim`, `__libc_realloc`, `__libc_memalign` |
 | `<muslext/math.h>` | `gamma`, `roundeven`, `clog10`, finite/NaN helpers |
 | `<muslext/pthread.h>` | `pthread_tryjoin_np`, `pthread_timedjoin_np`, `pthread_yield` |
-| `<muslext/pthread_affinity.h>` | pthread affinity; requires `_GNU_SOURCE` |
+| `<muslext/pthread_affinity.h>` | `pthread_setaffinity_np`, `pthread_getaffinity_np`; requires `_GNU_SOURCE` |
 | `<muslext/resolv.h>` | `b64_ntop`, `b64_pton` |
 | `<muslext/sched.h>` | `getcpu` |
 | `<muslext/setjmp.h>` | `__sigsetjmp`; requires POSIX/GNU feature macros |
@@ -75,12 +75,12 @@ Use `<muslext/muslext.h>` for the complete interface surface.
 
 ## Feature-test macros
 
-Minimal headers do not define feature-test macros.  Interfaces that are GNU
-extensions require the consumer to define `_GNU_SOURCE` before any system
-header:
+GNU extension interfaces require the consumer to define `_GNU_SOURCE`
+before any system header:
 
 - `<muslext/pthread_affinity.h>` requires `_GNU_SOURCE` for `cpu_set_t` and
-  reports an explicit error otherwise;
+  reports an explicit error otherwise; it declares `pthread_setaffinity_np`
+  and `pthread_getaffinity_np`;
 - `<muslext/setjmp.h>` requires `_GNU_SOURCE` or a POSIX feature macro for
   `sigjmp_buf`.
 
@@ -111,5 +111,5 @@ implemented yet.
   `pwritev64v2` depend on kernel support and fail with `ENOSYS` otherwise.
 - `__libc_*`, `__fpu_control`, `__asinf_finite`, `__isinff` and `__isnanf`
   are best-effort ABI shims, not guarantees of libc-internal semantics.
-- A-class wrappers (shadow, affinity, `statx`, etc.) depend on the runtime
+- A-class wrappers (shadow, `pthread_setaffinity_np`/`pthread_getaffinity_np`, `statx`, etc.) depend on the runtime
   libc having a real implementation rather than an `ENOSYS` stub.
