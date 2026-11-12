@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5.0
+
+This release contains source-level breaking changes.
+
+### Changed
+
+- Minimal headers no longer define `_GNU_SOURCE`.  Consumers must define the
+  appropriate feature-test macros before any system header.
+- `muslext/pthread.h` now contains only non-GNU pthread extensions; affinity
+  moved to `muslext/pthread_affinity.h`, which requires `_GNU_SOURCE`.
+- `muslext/muslext.h` includes GNU-dependent headers only when their types are
+  visible.
+
 ## 1.4.0
 
 ### Added
